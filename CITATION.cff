@@ -1,0 +1,27 @@
+cff-version: 1.2.0
+message: "If you use these materials, please cite them as below."
+title: "INDoS WG3 Training School 2026: functional MRI preprocessing and quality control materials"
+abstract: >-
+  Teaching materials on functional MRI preprocessing with fMRIPrep, execution
+  forensics and quality control, prepared for the Training School of Working
+  Group 3 of the INDoS COST Action (CA24161), Madrid, 30 September to
+  2 October 2026.
+type: dataset
+authors:
+  - family-names: "Waller"
+    given-names: "Lea"
+    affiliation: "Charité Universitätsmedizin Berlin, Germany"
+    orcid: "https://orcid.org/XXXX-XXXX-XXXX-XXXX"
+license: CC-BY-4.0
+repository-code: "https://github.com/indos-costaction/wg3-ts2026-waller"
+url: "https://www.indos-costaction.eu/training"
+keywords:
+  - neuroimaging
+  - preprocessing
+  - functional MRI
+  - fMRIPrep
+  - quality control
+  - training materials
+  - COST Action CA24161
+version: 1.0.0
+date-released: "2026-09-29"
