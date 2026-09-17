@@ -10,7 +10,7 @@ type: dataset
 authors:
   - family-names: "Waller"
     given-names: "Lea"
-    affiliation: "Charité Universitätsmedizin Berlin, Germany"
+    affiliation: "CRIUGM and Université de Montréal, Montréal, Canada"
     orcid: "https://orcid.org/XXXX-XXXX-XXXX-XXXX"
 license: CC-BY-4.0
 repository-code: "https://github.com/indos-costaction/wg3-ts2026-waller"
