@@ -1,2 +1,5 @@
 * annex.backend=MD5E
 **/.git* annex.largefiles=nothing
+* annex.largefiles=nothing
+*.webm annex.largefiles=anything
+*.png annex.largefiles=anything
