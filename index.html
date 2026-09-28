@@ -1,0 +1,193 @@
+<!doctype html>
+<html>
+
+<head>
+    <title>Title</title>
+    <meta charset="utf-8" />
+    <style>
+        @import url("https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,100..900;1,100..900&display=swap");
+        @import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap");
+
+        body {
+            font-family: "Hanken Grotesk", sans-serif;
+        }
+
+        .remark-slide-content {
+            font-size: 24px;
+        }
+
+        .remark-code,
+        .remark-inline-code {
+            font-family: "IBM Plex Mono";
+        }
+
+        table {
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            padding: 0.5em;
+            border: 2px solid #ddd;
+        }
+
+        .theory,
+        .practical {
+            padding: 0.1em 0.6em;
+            background: #e3eefc;
+        }
+
+        .practical {
+            background: #fde3c4;
+        }
+
+        .step {
+            position: absolute;
+            top: 33.3%;
+            height: 33.3%;
+            width: 25%;
+            box-sizing: border-box;
+            padding: 1em;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #f6d5d5;
+            text-align: center;
+        }
+
+        .in::before {
+            content: "";
+            position: absolute;
+            right: 100%;
+            width: 100vw;
+            height: 1em;
+            background:
+                url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10'><path d='M5 1l5 4-5 4' stroke='black' fill='none'/></svg>") right / 1em no-repeat,
+                linear-gradient(black, black) center / 100% 2px no-repeat;
+        }
+
+        .panel {
+            margin-left: 40%;
+        }
+
+        .remark-slide-content:has(.panel) {
+            vertical-align: middle;
+        }
+
+        video,
+        img {
+            display: block;
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <textarea id="source">
+
+class: center, middle
+
+## Processing functional magnetic resonance images with [*fMRIPrep*](https://fmriprep.org/en/stable/)
+
+Lea Waller
+
+---
+
+## Agenda
+
+| Time        | Session                 | Topic                   |
+| :---------- | :---------------------- | :---------------------- |
+| 09:00–09:30 | .theory[Theory]         | Preprocessing           |
+| 09:30–10:30 | .practical[Practical]   | *fMRIPrep* setup        |
+| 10:30–11:00 | .theory[Theory]         | Quality control         |
+| 11:00–11:30 | .practical[Practical]   | How to rate reports     |
+| 11:30–12:00 | .theory[Theory]         | Functional connectomics |
+| 12:00–13:00 | .practical[Practical]   | Age prediction          |
+
+---
+
+class: middle
+
+<video src="fmri-visualization/raw.webm" controls loop muted></video>
+
+---
+
+.step.in[
+### Slice timing
+]
+
+.panel[
+- Acquisition methods like two-dimensional echo-planar imaging (EPI) measure slice by slice
+- Slices are sampled at different times
+- Slice timing interpolates each volume as if it was acquired all at once
+- In case of head motion, interpolation mixes signals from different anatomical locations
+]
+
+---
+
+class: middle
+
+<video src="fmri-visualization/motion-correction.webm" controls loop muted></video>
+
+---
+
+.step.in[
+### Head motion correction
+]
+
+.panel[
+- Participants move their head involuntarily
+- The same voxel location then maps to different anatomical locations in different volumes
+- Head motion correction aligns all volumes to a common spatial reference
+- Estimates three translations (*x*, *y*, *z*) and three rotations for each volume
+- These parameters are kept as confounds for later denoising
+]
+
+---
+
+class: middle
+
+<img src="fmri-visualization/functional.png" />
+
+---
+
+class: middle
+
+<img src="fmri-visualization/anatomical.png" />
+
+---
+
+class: middle
+
+<video src="fmri-visualization/susceptibility-distortion-correction.webm" controls loop muted></video>
+
+---
+
+.step.in[
+### Susceptibility distortion correction
+]
+
+.panel[
+...
+]
+
+---
+
+.step.in[
+### Standard space
+]
+
+.panel[
+...
+]
+
+    </textarea>
+    <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+    <script>
+        var slideshow = remark.create({
+            ratio: "16:9",
+        });
+    </script>
+</body>
+
+</html>

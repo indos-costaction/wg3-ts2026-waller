@@ -1,0 +1,3 @@
+[submodule "nipreps-presentations"]
+	path = nipreps-presentations
+	url = https://github.com/nipreps/presentations
