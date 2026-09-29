@@ -104,7 +104,7 @@
         }
 
         video,
-        img,
+        img.main,
         object {
             display: block;
             width: 100%;
@@ -140,18 +140,19 @@ Lea Waller
 
 | Time        | Session                                   |
 | :---------- | :---------------------------------------- |
-| 09:00–09:30 | .theory[Theory] Preprocessing             |
+| 09:00–09:30 | .theory[Theory] From fMRI Preprocessing to *fMRIPrep* |
 | 09:30–10:30 | .practical[Practical] *fMRIPrep* setup    |
 | 10:30–11:00 | .theory[Theory] Quality control           |
-| 11:00–11:30 | .practical[Practical] |
-| 11:30–12:00 | .theory[Theory] Functional connectomics   |
+| 11:00–11:30 | .practical[Practical] fMRI Open QC Project |
+| 11:30–12:00 | .theory[Theory] Functional connectivity   |
 | 12:00–13:00 | .practical[Practical] Age prediction      |
 
 ---
 
 class: center, middle
 
-# Preprocessing
+# .theory[Theory]
+# From fMRI Preprocessing to *fMRIPrep*
 
 ---
 
@@ -164,7 +165,7 @@ class: center, middle
 
 ## Analytical variability in fMRI
 
-<img src="nipreps-presentations/2025-MRITogether/images/narps-paper.png" style="width: 60%" />
+<img src="nipreps-presentations/2025-MRITogether/images/narps-paper.png" class="main" style="width: 60%" />
 .source[[Botvinik-Nezer et al., 2020](https://doi.org/10.1038/s41586-020-2314-9)]
 .source[Oscar Esteban, [MRI Together 2025](https://www.nipreps.org/presentations/2025-MRITogether/)]
 
@@ -190,14 +191,14 @@ class: center, middle
 
 ## Tracking *fMRIPrep*'s adoption
 
-<img src="https://www.nipreps.org/assets/20251117_weekly.png" style="width: 80%" />
+<img src="https://www.nipreps.org/assets/20251117_weekly.png" class="main" style="width: 80%" />
 .source[Oscar Esteban, [MRI Together 2025](https://www.nipreps.org/presentations/2025-MRITogether/)]
 
 ---
 
 ## Capability maturity model for science operations
 
-<img src="assets/sciops-maturity-model.svg" style="width: 90%" />
+<img src="assets/sciops-maturity-model.svg" class="main" style="width: 90%" />
 .source[[Johnson et al., 2024](https://doi.org/10.48550/arXiv.2401.00077)]
 
 ---
@@ -276,7 +277,7 @@ class: middle
 
 class: middle
 
-<img src="fmri-visualization/anatomical.png" />
+<img src="fmri-visualization/anatomical.png" class="main" />
 .label[Relatively undistorted T1w sMRI scan]
 .source[NDARINVXP963GZ5 of the [Transdiagnostic Connectome Project](https://openneuro.org/datasets/ds005237)]
 
@@ -284,7 +285,7 @@ class: middle
 
 class: middle
 
-<img src="fmri-visualization/functional.png" />
+<img src="fmri-visualization/functional.png" class="main" />
 .label[Before susceptibility distortion correction]
 .source[NDARINVXP963GZ5 of the [Transdiagnostic Connectome Project](https://openneuro.org/datasets/ds005237)]
 
@@ -328,7 +329,7 @@ class: middle
 
 class: middle
 
-<img src="fmri-visualization/template.png" />
+<img src="fmri-visualization/template.png" class="main" />
 .label[MNI152NLin2009cAsym template]
 .source[[Fonov et al., 2011](https://doi.org/10.1016/j.neuroimage.2010.07.033)]
 .source[[TemplateFlow](https://www.templateflow.org)]
@@ -386,6 +387,64 @@ class: middle
 
 <iframe src="assets/sub-NDARINVXP963GZ5.html" style="width: 100%; height: 460px; border: 0"></iframe>
 .source[NDARINVXP963GZ5 of the [Transdiagnostic Connectome Project](https://openneuro.org/datasets/ds005237)]
+
+---
+
+class: middle
+
+.center[
+# .practical[Practical]
+# *fMRIPrep* setup
+]
+
+1. Open Neurodesk Play
+2. Once Jupyter Lab opens, click the Terminal button in the center of the top row
+3. Download the notebook with the command
+```bash
+wget "https://lea.science/teaching/wg3-ts2026-waller/practical-1-fmriprep-setup.ipynb"
+```
+4. Open the notebook by double-clicking it in the files browser on the left
+
+---
+
+class: middle
+
+.center[
+# .theory[Theory]
+# Quality control
+]
+
+---
+
+class: middle
+
+.center[
+# .practical[Practical]
+# fMRI Open QC Project
+]
+
+1. Navigate to https://lea.science/teaching/wg3-ts2026-waller/practical-2-quality-control
+2. Complete the ratings in the web-app
+3. Click the <img src="assets/menu.svg" alt="menu" style="height: 1em; width: 1em; padding: 0.15em; vertical-align: -0.3em; background: #e0e0e0; border-radius: 0.2em"> icon to open the menu and select *Export*
+4. Rename the downloaded file with your name or pseudonym and upload it to https://forms.gle/77FgaRyTxUfYtef66
+
+---
+
+class: middle
+
+.center[
+# .theory[Theory]
+# Functional connectivity
+]
+
+---
+
+class: middle
+
+.center[
+# .theory[Theory]
+# Functional connectivity
+]
 
     </textarea>
     <script src="assets/remark-latest.min.js"></script>

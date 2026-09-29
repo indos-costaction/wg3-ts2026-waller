@@ -4,3 +4,4 @@
 *.webm annex.largefiles=anything
 *.png annex.largefiles=anything
 *.svg annex.largefiles=anything
+*.tsv annex.largefiles=anything
