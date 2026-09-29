@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Title</title>
+    <title>Processing fMRI with fMRIPrep</title>
     <meta charset="utf-8" />
     <style>
         @import url("https://fonts.googleapis.com/css2?family=Hanken+Grotesk:ital,wght@0,100..900;1,100..900&display=swap");
@@ -32,7 +32,8 @@
         }
 
         .theory,
-        .practical {
+        .practical,
+        .spatial {
             padding: 0.1em 0.6em;
             background: #e3eefc;
         }
@@ -62,8 +63,30 @@
             width: 100vw;
             height: 1em;
             background:
-                url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10'><path d='M5 1l5 4-5 4' stroke='black' fill='none'/></svg>") right / 1em no-repeat,
+                url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10'><path d='M3 2.5L10 5 3 7.5z'/></svg>") right / 1em no-repeat,
                 linear-gradient(black, black) center / 100% 2px no-repeat;
+        }
+
+        .flow {
+            display: flex;
+            gap: 1.5em;
+            font-size: 1.0em;
+            font-weight: bold;
+        }
+
+        .flow .step {
+            position: relative;
+            flex: 1;
+            height: 6em;
+            padding: 0.3em;
+        }
+
+        .spatial {
+            background: #dcd6f5;
+        }
+
+        .flow .step+.step::before {
+            width: 1.5em;
         }
 
         .panel {
@@ -74,10 +97,30 @@
             vertical-align: middle;
         }
 
+        .source {
+            display: block;
+            font-size: 0.6em;
+            color: #888;
+        }
+
         video,
-        img {
+        img,
+        object {
             display: block;
             width: 100%;
+        }
+
+        .remark-slide-content p {
+            position: relative;
+        }
+
+        .label {
+            position: absolute;
+            top: 0.6em;
+            left: 0.6em;
+            padding: 0.1em 0.5em;
+            color: white;
+            background: rgba(0, 0, 0, 0.6);
         }
     </style>
 </head>
@@ -95,20 +138,87 @@ Lea Waller
 
 ## Agenda
 
-| Time        | Session                 | Topic                   |
-| :---------- | :---------------------- | :---------------------- |
-| 09:00–09:30 | .theory[Theory]         | Preprocessing           |
-| 09:30–10:30 | .practical[Practical]   | *fMRIPrep* setup        |
-| 10:30–11:00 | .theory[Theory]         | Quality control         |
-| 11:00–11:30 | .practical[Practical]   | How to rate reports     |
-| 11:30–12:00 | .theory[Theory]         | Functional connectomics |
-| 12:00–13:00 | .practical[Practical]   | Age prediction          |
+| Time        | Session                                   |
+| :---------- | :---------------------------------------- |
+| 09:00–09:30 | .theory[Theory] Preprocessing             |
+| 09:30–10:30 | .practical[Practical] *fMRIPrep* setup    |
+| 10:30–11:00 | .theory[Theory] Quality control           |
+| 11:00–11:30 | .practical[Practical] |
+| 11:30–12:00 | .theory[Theory] Functional connectomics   |
+| 12:00–13:00 | .practical[Practical] Age prediction      |
+
+---
+
+class: center, middle
+
+# Preprocessing
+
+---
+
+## The neuroimaging workflow
+
+<object type="image/svg+xml" data="nipreps-presentations/assets/neuroimaging-workflow-large.svg"></object>
+.source[Chris Markiewicz & Oscar Esteban, [fMRIPrep Bootcamp Geneva 2024](https://www.nipreps.org/presentations/2024-fMRIPrep-Bootcamp-Geneva/day1-01-fmriprep-primer/index.html#3)]
+
+---
+
+## Analytical variability in fMRI
+
+<img src="nipreps-presentations/2025-MRITogether/images/narps-paper.png" style="width: 60%" />
+.source[[Botvinik-Nezer et al., 2020](https://doi.org/10.1038/s41586-020-2314-9)]
+.source[Oscar Esteban, [MRI Together 2025](https://www.nipreps.org/presentations/2025-MRITogether/)]
+
+---
+
+## Toolkits, standards and *fMRIPrep*
+
+| Year        | Milestone  | Contribution                                 |
+| :---------- | :--------- | :------------------------------------------- |
+| 1990s–today | Toolkits   | SPM, AFNI, FSL, FreeSurfer, ANTs, …          |
+| 2011        | *Nipype*   | One Python interface to all toolkits         |
+| 2016        | BIDS       | Standard for file names and metadata         |
+| 2017        | BIDS Apps  | Pipelines that run on any BIDS dataset       |
+| 2017        | *fMRIPrep* | Combines the strengths of these toolkits     |
+| Today       | *fMRIPrep* | 70+ contributors, ~11,800 runs per week      |
+
+.source[[Gorgolewski et al., 2011](https://doi.org/10.3389/fninf.2011.00013)]
+.source[[Gorgolewski et al., 2016](https://doi.org/10.1038/sdata.2016.44)]
+.source[[Gorgolewski et al., 2017](https://doi.org/10.1371/journal.pcbi.1005209)]
+.source[[Esteban et al., 2019](https://doi.org/10.1038/s41592-018-0235-4)]
+
+---
+
+## Tracking *fMRIPrep*'s adoption
+
+<img src="https://www.nipreps.org/assets/20251117_weekly.png" style="width: 80%" />
+.source[Oscar Esteban, [MRI Together 2025](https://www.nipreps.org/presentations/2025-MRITogether/)]
+
+---
+
+## Capability maturity model for science operations
+
+<img src="assets/sciops-maturity-model.svg" style="width: 90%" />
+.source[[Johnson et al., 2024](https://doi.org/10.48550/arXiv.2401.00077)]
+
+---
+
+## Why do data require preprocessing?
+
+All analyses require consistent and accurate **spatiotemporal location**
+
+- **Within runs:** head motion, slice timing
+- **Within individuals:** coregistration between runs and with anatomy, susceptibility distortion
+- **Across subjects:** spatial normalization
+
+.source[Chris Markiewicz & Oscar Esteban, [fMRIPrep Bootcamp Geneva 2024](https://www.nipreps.org/presentations/2024-fMRIPrep-Bootcamp-Geneva/day1-01-fmriprep-primer/)]
 
 ---
 
 class: middle
 
 <video src="fmri-visualization/raw.webm" controls loop muted></video>
+.label[Resting state fMRI scan]
+.source[NDARINVXP963GZ5 of the [Transdiagnostic Connectome Project](https://openneuro.org/datasets/ds005237)]
 
 ---
 
@@ -127,7 +237,9 @@ class: middle
 
 class: middle
 
-<video src="fmri-visualization/motion-correction.webm" controls loop muted></video>
+<video src="fmri-visualization/slice-timing.webm" controls loop muted></video>
+.label[After slice timing correction]
+.source[NDARINVXP963GZ5 of the [Transdiagnostic Connectome Project](https://openneuro.org/datasets/ds005237)]
 
 ---
 
@@ -139,7 +251,7 @@ class: middle
 - Participants move their head involuntarily
 - The same voxel location then maps to different anatomical locations in different volumes
 - Head motion correction aligns all volumes to a common spatial reference
-- Estimates three translations (*x*, *y*, *z*) and three rotations for each volume
+- Estimates three translations (*x*, *y*, *z*) and three rotations (roll, pitch, yaw) for each volume
 - These parameters are kept as confounds for later denoising
 ]
 
@@ -147,19 +259,42 @@ class: middle
 
 class: middle
 
-<img src="fmri-visualization/functional.png" />
+<video src="fmri-visualization/motion-correction.webm" controls loop muted></video>
+.label[After head motion correction]
+.source[NDARINVXP963GZ5 of the [Transdiagnostic Connectome Project](https://openneuro.org/datasets/ds005237)]
+
+---
+
+class: middle
+
+## Susceptibility distortions
+
+<object type="image/svg+xml" data="nipreps-presentations/assets/sdc-the-problem.svg" style="width: 70%"></object>
+.source[Oscar Esteban, [Preprocessing & pipelines, ESMRMB 2025](https://www.nipreps.org/presentations/2025-esmrmb)]
 
 ---
 
 class: middle
 
 <img src="fmri-visualization/anatomical.png" />
+.label[Relatively undistorted T1w sMRI scan]
+.source[NDARINVXP963GZ5 of the [Transdiagnostic Connectome Project](https://openneuro.org/datasets/ds005237)]
+
+---
+
+class: middle
+
+<img src="fmri-visualization/functional.png" />
+.label[Before susceptibility distortion correction]
+.source[NDARINVXP963GZ5 of the [Transdiagnostic Connectome Project](https://openneuro.org/datasets/ds005237)]
 
 ---
 
 class: middle
 
 <video src="fmri-visualization/susceptibility-distortion-correction.webm" controls loop muted></video>
+.label[After susceptibility distortion correction]
+.source[NDARINVXP963GZ5 of the [Transdiagnostic Connectome Project](https://openneuro.org/datasets/ds005237)]
 
 ---
 
@@ -168,7 +303,11 @@ class: middle
 ]
 
 .panel[
-...
+- Air–tissue boundaries (sinuses, ear canals) distort the local B<sub>0</sub> field
+- EPI images are stretched and compressed along the phase-encoding direction, and signal drops out
+- Correction needs extra scans, e.g. spin-echo EPI with opposite phase-encoding directions
+- *SDCFlows* estimates a B<sub>0</sub> fieldmap and derives how far each voxel was displaced
+- Without fieldmaps, `--use-syn-sdc` approximates the correction by registration to the T1w image
 ]
 
 ---
@@ -178,11 +317,78 @@ class: middle
 ]
 
 .panel[
-...
+- Brains differ in size, shape and position
+- Normalization maps every participant to a common template, so voxels correspond across participants
+- The BOLD reference is registered to the T1w image, and the T1w image to the template
+- Default template is MNI152NLin2009cAsym; choose others with `--output-spaces`
+- All transforms (head motion, distortion, registrations) are combined and applied in a single resampling step
 ]
 
+---
+
+class: middle
+
+<img src="fmri-visualization/template.png" />
+.label[MNI152NLin2009cAsym template]
+.source[[Fonov et al., 2011](https://doi.org/10.1016/j.neuroimage.2010.07.033)]
+.source[[TemplateFlow](https://www.templateflow.org)]
+
+---
+
+class: middle
+
+<video src="fmri-visualization/standard-space.webm" controls loop muted></video>
+.label[After coregistration to T1w and registration to MNI152NLin2009cAsym template]
+.source[NDARINVXP963GZ5 of the [Transdiagnostic Connectome Project](https://openneuro.org/datasets/ds005237)]
+
+---
+
+.step.in[
+### Denoising
+]
+
+.panel[
+- Motion correction leaves lingering motion effects in the signal
+- Physiological signals like breathing and heartbeat, as well as scanner drift
+- *fMRIPrep* generates confound time series, but does not remove them
+- Choose a denoising strategy and regress the confound time series out
+]
+
+---
+
+## *fMRIPrep* is minimal preprocessing
+
+- Agnostic to downstream analysis: no analysis-specific steps
+- Does not regress out confounds or apply smoothing
+- Cross-sectional: assumes a participant's anatomy does not change between sessions
+- Designed for the common case (80/20 principle)
+
+.source[Chris Markiewicz & Oscar Esteban, [fMRIPrep Bootcamp Geneva 2024](https://www.nipreps.org/presentations/2024-fMRIPrep-Bootcamp-Geneva/day1-01-fmriprep-primer/)]
+
+---
+
+## *fMRIPrep* workflow
+
+.flow[.step[Slice timing] .step.in.spatial[Head motion correction] .step.in.spatial[Susceptibility distortion correction] .step.in.spatial[Standard space] .step.in[Denoising]]
+
+- Spatial steps are combined into a single resampling step, helping reduce numerical variability
+
+---
+
+## *fMRIPrep*: fit & transform
+
+<object type="image/svg+xml" data="nipreps-presentations/assets/fmriprep-fit-transform-inkscape.svg" style="padding-bottom: 10px"></object>
+.source[Oscar Esteban, [Preprocessing & pipelines, ESMRMB 2025](https://www.nipreps.org/presentations/2025-esmrmb/)]
+
+---
+
+## Visual reports
+
+<iframe src="assets/sub-NDARINVXP963GZ5.html" style="width: 100%; height: 460px; border: 0"></iframe>
+.source[NDARINVXP963GZ5 of the [Transdiagnostic Connectome Project](https://openneuro.org/datasets/ds005237)]
+
     </textarea>
-    <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+    <script src="assets/remark-latest.min.js"></script>
     <script>
         var slideshow = remark.create({
             ratio: "16:9",
