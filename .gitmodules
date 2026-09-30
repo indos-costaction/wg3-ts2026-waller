@@ -1,3 +1,6 @@
 [submodule "nipreps-presentations"]
-	path = nipreps-presentations
+	path = examples/nipreps-presentations
 	url = https://github.com/nipreps/presentations
+[submodule "wg3-ts2026-esteban"]
+	path = examples/wg3-ts2026-esteban
+	url = https://github.com/indos-costaction/wg3-ts2026-esteban
