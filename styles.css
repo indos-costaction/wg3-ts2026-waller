@@ -1,0 +1,790 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@500;600;700&family=Urbanist:ital,wght@0,400;0,600;0,800;1,400&family=Roboto + Mono:wght@400;700&display=swap");
+
+/* Shared — theme, typography, slide chrome, cards, flows, media and Markdown layout */
+
+:root {
+    --orange: #f9b34b;
+    --turquoise: #60bfaf;
+    --lavender: #be5eac;
+    --purple: #5d288f;
+    --navy: #122b62;
+    --line: #e4e8ee;
+}
+
+body {
+    font-family: "Urbanist", sans-serif;
+}
+
+.remark-slide-content {
+    font-size: 24px;
+    padding-left: 88px;
+    color: #222;
+}
+
+.remark-slide-content h1,
+.remark-slide-content h2,
+.remark-slide-content h3,
+th {
+    font-family: "Montserrat", sans-serif;
+    font-weight: 600;
+    color: var(--navy);
+}
+
+a {
+    color: var(--purple);
+    text-decoration: none;
+}
+
+.remark-code,
+.remark-inline-code {
+    font-family: "Roboto Mono", monospace;
+}
+
+/* Navy rail with the logo colours as an edge stripe */
+.perma-sidebar {
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: 40px;
+    z-index: 1;
+    background: linear-gradient(var(--turquoise) 0 25%, var(--orange) 0 50%, var(--lavender) 0 75%, var(--purple) 0) right / 5px 100% no-repeat, var(--navy);
+    color: #f4f4f4;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.perma-sidebar p {
+    position: absolute;
+    top: 50%;
+    left: 18px;
+    width: 640px;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    white-space: nowrap;
+    transform: translate(-50%, -50%) rotate(-90deg);
+}
+
+.perma-sidebar img {
+    height: 20px;
+}
+
+/* INDoS logo on titled slides */
+.remark-slide-content:has( > h2)::after {
+    content: "";
+    position: absolute;
+    top: 16px;
+    right: 24px;
+    width: 165px;
+    aspect-ratio: 2440 / 693;
+    background: url("assets/indos-logo-left.png") top right / contain no-repeat;
+    opacity: 0.85;
+}
+
+/* Slide title in a navy band with a diagonal right edge */
+.remark-slide-content > h2 {
+    width: fit-content;
+    max-width: calc(100% - 200px);
+    margin: 0.4em 0 0.5em -48px;
+    padding: 0.2em 1.5em 0.2em 48px;
+    background: var(--navy);
+    color: #fff;
+    clip-path: polygon(0 0, 100% 0, calc(100% - 0.8em) 100%, 0 100%);
+}
+
+/* Shared card styles */
+.cards {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 20px;
+}
+
+.card,
+.step {
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    border-top: 4px solid var(--turquoise);
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    padding: 0.7em 0.85em 0.8em;
+    font-size: 0.75em;
+    line-height: 1.35;
+}
+
+.orange {
+    border-top-color: var(--orange);
+}
+
+.lavender,
+.spatial {
+    border-top-color: var(--lavender);
+}
+
+.purple {
+    border-top-color: var(--purple);
+}
+
+.navy {
+    border-top-color: var(--navy);
+}
+
+.gray {
+    border-top-color: #ccc;
+}
+
+.red {
+    border-top-color: #d9534f;
+}
+
+.card h3 {
+    margin: 0.2em 0 0.35em;
+    font-size: 1.15em;
+    line-height: 1.25;
+    color: var(--purple);
+}
+
+.card p {
+    margin: 0.3em 0;
+}
+
+.card > :last-child,
+.qc img {
+    margin-top: auto;
+    padding-top: 0.5em;
+}
+
+.kicker {
+    font-size: 0.83em;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--purple);
+}
+
+.gray-text {
+    color: #888;
+}
+
+.cards + p {
+    clear: both;
+    padding-top: 0.6em;
+}
+
+/* Shared — tables and session badges */
+table {
+    border-collapse: collapse;
+}
+
+th,
+td {
+    padding: 0.4em 0.6em;
+    border-bottom: 1px solid var(--line);
+}
+
+td:first-child {
+    color: var(--purple);
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+}
+
+.theory,
+.practical {
+    display: inline-block;
+    min-width: 5.4em;
+    margin-right: 0.6em;
+    padding: 0.18em 0.55em;
+    border-radius: 4px;
+    vertical-align: 0.22em;
+    font: 700 0.6em "Montserrat", sans-serif;
+    letter-spacing: 0.06em;
+    text-align: center;
+    text-transform: uppercase;
+    color: var(--purple);
+    background: #f1e9f8;
+}
+
+.practical {
+    color: #1f6f63;
+    background: #e3f4f0;
+}
+
+/* Shared — processing steps and flow diagrams */
+.step {
+    position: absolute;
+    top: 33.3%;
+    height: 33.3%;
+    width: 25%;
+    box-sizing: border-box;
+    padding: 1em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--navy);
+    text-align: center;
+}
+
+.in::before {
+    content: "";
+    position: absolute;
+    right: 100%;
+    width: 100vw;
+    height: 1em;
+    background:
+        url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10'><path fill='%23122b62' d='M3 2.5L10 5 3 7.5z'/></svg>") right / 1em no-repeat,
+        linear-gradient(var(--navy), var(--navy)) center / 100% 2px no-repeat;
+}
+
+.flow {
+    display: flex;
+    gap: 1.5em;
+    font-family: "Montserrat", sans-serif;
+    font-size: 0.8em;
+    font-weight: 600;
+}
+
+.flow .step {
+    position: relative;
+    flex: 1;
+    height: 6em;
+    padding: 0.3em;
+}
+
+/* Shared — media and source credits */
+.source {
+    display: block;
+    font-size: 0.6em;
+    color: #888;
+}
+
+video,
+.main img,
+object {
+    display: block;
+    width: 100%;
+}
+
+.remark-slide-content p {
+    position: relative;
+}
+
+/* Center the text vertically in cards with a single paragraph, or below the step label */
+.card > :only-child,
+.steps .card p {
+    margin: auto 0;
+}
+
+.cards > p > img {
+    width: 100%;
+}
+
+/* Shared — task stimuli (slides 10 and 25) */
+.stimuli {
+    margin-bottom: 0.5em;
+}
+
+.stimuli > .stimulus-pair {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2em;
+}
+
+.stimuli .figure {
+    display: flex;
+    margin: 0;
+}
+
+.stimuli .caption {
+    display: flex;
+    align-items: center;
+    padding: 0 0.75em;
+    background: #e0e0e0;
+}
+
+.stimuli img {
+    height: 80px;
+}
+
+.flow .step + .step::before,
+.glm .step::before,
+.glm > div.in::before {
+    width: 1.5em;
+}
+
+/* Shared — learning goals (slides 4 and 49) */
+.learning-goals {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    margin-top: 0.4em;
+}
+
+/* Markdown paragraphs and image annotations must not add layout boxes. */
+.cover-band > p:has( > .mosaic),
+.map > p,
+.hanoi .card > p,
+.map > .card > p,
+.connectivity .step > p,
+.glm > p,
+.glm > .in:not(.step) > p,
+.cards > p:has( > img),
+.side-by-side > p,
+.qc .figure > p,
+.stimuli .figure > p,
+p > .main,
+p > .logo,
+p > .slice,
+p > .lockup {
+    display: contents;
+}
+
+/* Slide 1 — Cover */
+
+.cover {
+    padding: 0 !important;
+}
+
+.cover-band {
+    position: absolute;
+    inset: 0 40% 0 0;
+    padding: 48px 12% 0 56px;
+    background: var(--navy);
+    color: #fff;
+    clip-path: polygon(0 0, 100% 0, 84% 100%, 0 100%);
+}
+
+.cover-band .lockup img {
+    display: block;
+    width: 220px;
+    margin-bottom: 32px;
+}
+
+.cover-band h1,
+.cover-band a {
+    color: #fff !important;
+}
+
+.cover-band h1 {
+    font-size: 1.5em;
+    line-height: 1.15;
+}
+
+.eyebrow {
+    display: block;
+    font-family: "Montserrat", sans-serif;
+    color: var(--orange);
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    font-weight: 700;
+    font-size: 0.72em;
+}
+
+.who {
+    display: block;
+    margin-top: 1.2em;
+    color: rgba(255, 255, 255, 0.85);
+}
+
+.mosaic {
+    display: block;
+    width: 59px;
+    height: 11px;
+    background: linear-gradient(90deg, var(--turquoise) 0 11px, transparent 0 16px, var(--orange) 0 27px, transparent 0 32px, var(--lavender) 0 43px, transparent 0 48px, var(--purple) 0);
+}
+
+.cover-side {
+    position: absolute;
+    top: 70px;
+    right: 48px;
+    width: 30%;
+    text-align: center;
+    font-size: 0.72em;
+    word-break: break-all;
+}
+
+.cover-side img {
+    width: 62%;
+}
+
+.cover-logos {
+    position: absolute;
+    right: 48px;
+    bottom: 30px;
+}
+
+.cover-logos img {
+    height: 46px;
+    margin-left: 22px;
+}
+
+/* Slide 2 — WiFi */
+
+.wifi .card {
+    text-align: center;
+    padding: 0.3em;
+    font-size: 1.5em;
+}
+
+.wifi .card h3,
+.wifi .card p {
+    margin: 0;
+    padding: 0;
+}
+
+.wifi .card:nth-child(3) {
+    grid-column: 1 / -1;
+    flex-direction: row;
+    justify-content: center;
+    align-items: baseline;
+    gap: 0.5em;
+}
+
+.wifi .card:nth-child(3) > :last-child {
+    margin: 0;
+    padding: 0;
+}
+
+.wifi img {
+    display: block;
+    height: 280px;
+    margin: 0 auto;
+}
+
+/* Slide 3 — About me */
+
+.about-photo {
+    float: left;
+    width: 22%;
+}
+
+.about-photo img {
+    width: 90%;
+    border-radius: 10px;
+    filter: grayscale(1);
+}
+
+.card .logo img {
+    height: 4em;
+}
+
+/* Slide 4 — Agenda */
+
+.agenda table {
+    font-size: 0.85em;
+}
+
+.agenda h3 {
+    margin: 0.65em 0 0;
+    font-size: 1em;
+}
+
+/* Slide 7 — Anatomical and functional images */
+
+.card .slice img {
+    display: block;
+    height: 200px;
+    margin: 0 auto;
+}
+
+/* Slide 8 — BOLD is an indirect measurement */
+
+.hanoi {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    text-align: center;
+}
+
+.hanoi .card {
+    display: block;
+}
+
+.hanoi .card:nth-child(1) {
+    width: 30%;
+}
+
+.hanoi .card:nth-child(2) {
+    width: 40%;
+}
+
+.hanoi .card:nth-child(3) {
+    width: 50%;
+}
+
+.hanoi .card:nth-child(4) {
+    width: 60%;
+}
+
+.hanoi .card:nth-child(5) {
+    width: 70%;
+}
+
+.hanoi .card:nth-child(6) {
+    width: 80%;
+}
+
+.hanoi .card:nth-child(7) {
+    width: 90%;
+}
+
+/* Slide 9 — Hemodynamic response function */
+
+.hrf img {
+    height: 460px;
+}
+
+/* Slide 10 — Task-based fMRI */
+
+.glm {
+    display: flex;
+    align-items: center;
+    gap: 1.5em;
+}
+
+.glm > p > img:first-child {
+    flex: 1;
+    min-width: 0;
+}
+
+.glm .step {
+    position: relative;
+    flex: none;
+    width: auto;
+    height: auto;
+    padding: 0.6em 0.8em;
+    font-size: 1.2em;
+    white-space: nowrap;
+}
+
+.glm > div.in {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.glm > div.in img {
+    height: 320px;
+}
+
+.glm .step > p {
+    margin: 0;
+}
+
+/* Slides 11 and 42 — Functional connectivity */
+
+.connectivity .step {
+    flex-direction: column;
+    gap: 0.5em;
+    height: auto;
+    padding: 0.8em;
+}
+
+.connectivity img {
+    width: 100%;
+    height: 150px;
+    object-fit: contain;
+}
+
+/* Slides 12–23 — Scan and preprocessing media labels */
+
+.label {
+    position: absolute;
+    top: 0.6em;
+    left: 0.6em;
+    padding: 0.1em 0.5em;
+    color: white;
+    background: rgba(18, 43, 98, 0.8);
+}
+
+/* Slides 13, 15, 20, 21 and 24 — Preprocessing explanation panels */
+
+.panel {
+    margin-left: 40%;
+}
+
+.remark-slide-content:has( > .step) .panel li + li {
+    margin-top: 0.6em;
+}
+
+.remark-slide-content:has(.panel) {
+    vertical-align: middle;
+}
+
+/* Slide 27 — fMRIPrep: fit & transform */
+
+.fit-transform {
+    padding-bottom: 10px;
+}
+
+/* Slide 29 — Visual reports */
+
+.visual-report {
+    width: 100%;
+    height: 460px;
+    border: 0;
+}
+
+/* Slide 30 — Beyond individual pipelines */
+
+.maturity-model img {
+    width: 90%;
+}
+
+/* Slide 33 — Why quality control needs a protocol */
+
+.map {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0.5em 0;
+}
+
+.map > div {
+    display: grid;
+    place-items: center;
+    flex: none;
+    width: 6em;
+    height: 5em;
+    text-align: center;
+}
+
+.map img {
+    height: 260px;
+}
+
+/* Slide 34 — HALFpipe */
+
+.steps {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    margin-top: 1em;
+    text-align: center;
+}
+
+.steps .ui:last-child {
+    grid-column: 4;
+}
+
+/* Slides 35–39 — Quality control examples */
+
+.qc {
+    display: flex;
+    justify-content: center;
+}
+
+.qc .figure {
+    align-items: center;
+    min-width: 0;
+    margin: 0;
+    text-align: center;
+}
+
+/* Caption takes the width of the image, not of its text */
+.qc .caption {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5em;
+    width: 0;
+    min-width: 100%;
+}
+
+.qc .caption::before {
+    content: "";
+    flex: none;
+    width: 3em;
+    height: 3em;
+    background: var(--navy);
+    mask: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm3.5-9c.83 0 1.5-.67 1.5-1.5S16.33 8 15.5 8 14 8.67 14 9.5s.67 1.5 1.5 1.5zm-7 0c.83 0 1.5-.67 1.5-1.5S9.33 8 8.5 8 7 8.67 7 9.5 7.67 11 8.5 11zm3.5 6.5c2.33 0 4.31-1.46 5.11-3.5H6.89c.8 2.04 2.78 3.5 5.11 3.5z'/></svg>") center / contain no-repeat;
+}
+
+.qc .bad .caption::before {
+    mask-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><circle cx='15.5' cy='9.5' r='1.5'/><circle cx='8.5' cy='9.5' r='1.5'/><path d='M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm0-6c-2.33 0-4.32 1.45-5.12 3.5h1.67c.69-1.19 1.97-2 3.45-2s2.75.81 3.45 2h1.67c-.8-2.05-2.79-3.5-5.12-3.5z'/></svg>");
+}
+
+.qc img {
+    display: block;
+    max-width: 100%;
+    max-height: 280px;
+}
+
+.qc-definition {
+    font-size: 0.72em;
+    line-height: 1.35;
+    margin-bottom: 0.75em;
+}
+
+/* Slide 40 — fMRI Open QC Project */
+
+.menu-icon img {
+    height: 1em;
+    width: 1em;
+    padding: 0.15em;
+    vertical-align: -0.3em;
+    background: #e0e0e0;
+    border-radius: 0.2em;
+}
+
+/* Slide 43 — Analytical variability in task-based fMRI */
+
+.analytical-variability img {
+    max-height: 400px;
+}
+
+/* Slide 44 — Does this apply to functional connectivity? */
+
+.paper-title img {
+    max-height: 300px;
+}
+
+/* Slide 45 — Yes, same problem */
+
+.connectome-comparison img {
+    max-height: 380px;
+}
+
+/* Slide 46 — Best denoising strategy is dataset-dependent */
+
+.denoising-ranking img {
+    max-height: 420px;
+}
+
+/* Slide 47 — Brain age in Alzheimer's disease */
+
+.side-by-side {
+    display: flex;
+    align-items: center;
+    gap: 2em;
+}
+
+.side-by-side img {
+    flex: 1;
+    min-width: 0;
+}
+
+.age-flow {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1.3em;
+    margin-bottom: 1em;
+}
+
+.age-flow .card {
+    position: relative;
+    font-size: 0.65em;
+}
+
+.age-flow .card + .card::before {
+    content: "→";
+    position: absolute;
+    right: calc(100% + 0.25em);
+    top: 40%;
+    color: var(--navy);
+    font-size: 1.5em;
+}
+
+.brain-age .side-by-side img {
+    max-height: 230px;
+    object-fit: contain;
+}

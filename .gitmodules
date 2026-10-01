@@ -4,3 +4,12 @@
 [submodule "wg3-ts2026-esteban"]
 	path = examples/wg3-ts2026-esteban
 	url = https://github.com/indos-costaction/wg3-ts2026-esteban
+[submodule "examples/wg3-ts2026-garcia"]
+	path = examples/wg3-ts2026-garcia
+	url = https://github.com/indos-costaction/wg3-ts2026-garcia
+[submodule "examples/halfpipe-docs"]
+	path = examples/halfpipe-docs
+	url = https://github.com/HALFpipe/docs
+[submodule "remark"]
+	path = lib/remark
+	url = https://github.com/oesteban/remark-engine.git
