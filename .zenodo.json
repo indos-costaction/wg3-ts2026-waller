@@ -1,0 +1,47 @@
+{
+  "upload_type": "lesson",
+  "title": "INDoS WG3 Training School 2026: functional MRI preprocessing and quality control materials",
+  "description": "<p>Teaching materials on functional MRI preprocessing with fMRIPrep, execution forensics and quality control, prepared for the Training School of Working Group 3 of the INDoS COST Action (CA24161), Madrid, 30 September to 2 October 2026: a remark.js slide deck, a browser-based quality-control rating app, and Jupyter notebooks for the practicals.</p><p>The slides and the quality-control app are served at <a href=\"https://www.indos-costaction.eu/wg3-ts2026-waller/\">www.indos-costaction.eu/wg3-ts2026-waller</a>.</p><p>This repository is a DataLad dataset. Images, videos and the figures of the quality-control app are git-annex content, and the slide engine (<a href=\"https://github.com/oesteban/remark-engine\">remark-engine</a>) is a git submodule; neither is part of this archive. Retrieve them with <code>datalad clone https://github.com/indos-costaction/wg3-ts2026-waller</code>, then <code>datalad get assets fmri-visualization practical-2-quality-control</code> and <code>git submodule update --init lib/remark</code>.</p>",
+  "creators": [
+    {
+      "name": "Waller, Lea",
+      "affiliation": "CRIUGM and Université de Montréal, Montréal, Canada",
+      "orcid": "0000-0002-3239-6957"
+    }
+  ],
+  "license": "cc-by-4.0",
+  "language": "eng",
+  "keywords": [
+    "neuroimaging",
+    "preprocessing",
+    "functional MRI",
+    "fMRIPrep",
+    "quality control",
+    "training materials",
+    "INDoS",
+    "COST Action CA24161"
+  ],
+  "notes": "This publication is based upon work from COST Action CA24161 (INDoS), supported by COST (European Cooperation in Science and Technology).",
+  "related_identifiers": [
+    {
+      "identifier": "https://github.com/indos-costaction/wg3-ts2026-waller",
+      "relation": "isSupplementTo",
+      "resource_type": "software"
+    },
+    {
+      "identifier": "https://www.indos-costaction.eu/wg3-ts2026-waller/",
+      "relation": "isVariantFormOf",
+      "resource_type": "presentation"
+    },
+    {
+      "identifier": "https://www.indos-costaction.eu/wg3-ts2026",
+      "relation": "isPartOf",
+      "resource_type": "event"
+    },
+    {
+      "identifier": "https://github.com/oesteban/remark-engine",
+      "relation": "requires",
+      "resource_type": "software"
+    }
+  ]
+}
