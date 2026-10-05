@@ -12,6 +12,11 @@ authors:
     given-names: "Lea"
     affiliation: "CRIUGM and Université de Montréal, Montréal, Canada"
     orcid: "https://orcid.org/0000-0002-3239-6957"
+doi: 10.5281/zenodo.23164400
+identifiers:
+  - type: doi
+    value: 10.5281/zenodo.23164400
+    description: "Concept DOI: all versions, resolves to the latest release."
 license: CC-BY-4.0
 repository-code: "https://github.com/indos-costaction/wg3-ts2026-waller"
 url: "https://www.indos-costaction.eu/training"
