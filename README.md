@@ -1,5 +1,7 @@
 # INDoS WG3 Training School 2026 — functional MRI and quality control
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.23164400.svg)](https://doi.org/10.5281/zenodo.23164400)
+
 Materials for **Block 5** (fMRI preprocessing with fMRIPrep, execution forensics,
 QA/QC hands-on), Friday 2 October.
 
