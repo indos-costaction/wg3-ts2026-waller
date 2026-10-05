@@ -7,3 +7,6 @@
 *.tsv annex.largefiles=anything
 # SCM syntax highlighting & preventing 3-way merges
 pixi.lock merge=binary linguist-language=YAML linguist-generated=true -diff
+# QR codes are tiny: keep them in git rather than the annex, so the Pages
+# build and the source archive (Zenodo) carry them without the annex remote
+assets/qr-*.svg annex.largefiles=nothing
