@@ -1,0 +1,156 @@
+# Publish the deck and the QC web app to GitHub Pages, at
+# https://www.indos-costaction.eu/wg3-ts2026-waller/
+#
+# The site is only ever a published release: publishing a GitHub release
+# deploys that release, and pushing to main deploys nothing. The same
+# release is what Zenodo archives, so the live slides and the record with
+# the DOI are always the same version. Running the workflow by hand
+# redeploys the latest release. Pull requests run the build only, as a
+# check that the site can still be staged; they never deploy.
+#
+# This repository is a DataLad dataset. Images, videos and the QC app's
+# figures are git-annex symlinks whose content lives in the public-s3
+# special remote (Cloudflare R2, readable anonymously through its
+# publicurl). The build fetches only what the deck and the QC app load and
+# stages dereferenced copies in _site/. Uploading the checkout as it is
+# would fail: upload-pages-artifact tars with --dereference, and the data
+# directories would stay dangling symlinks.
+#
+# Requires Settings -> Pages -> Source = "GitHub Actions", and the
+# github-pages environment must allow deployments from tags matching v*
+# (Settings -> Environments -> github-pages), since a release runs on its tag.
+name: Deploy slides
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# One deployment at a time; never cancel one that is already publishing.
+# Pull-request builds get their own group, so they never queue behind a deploy.
+concurrency:
+  group: pages-${{ github.event_name == 'pull_request' && github.ref || 'deploy' }}
+  cancel-in-progress: false
+
+env:
+  SITE: _site
+  ANNEXED: assets fmri-visualization practical-2-quality-control
+
+jobs:
+  build:
+    # 24.04 ships git-annex 10.20240129. Getting content anonymously through
+    # the publicurl needs 10.20230802 or later; 22.04's 8.20210223 does not.
+    runs-on: ubuntu-24.04
+    steps:
+      # Always the latest full release: never a draft or a prerelease, nor an
+      # older tag published after a newer one. Fails when there is no release.
+      - name: Find the latest release
+        id: release
+        if: github.event_name != 'pull_request'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          tag=$(gh release view --repo "$GITHUB_REPOSITORY" --json tagName --jq .tagName)
+          echo "tag=$tag" >> "$GITHUB_OUTPUT"
+
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ steps.release.outputs.tag }}
+          submodules: false
+          fetch-depth: 0      # brings the git-annex branch along
+
+      - name: Check out the slide engine
+        run: git submodule update --init lib/remark
+
+      - name: Get annexed content with git-annex (no credentials needed)
+        continue-on-error: true   # the next step covers anything this misses
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq --no-install-recommends git-annex
+          git annex version | head -n 1
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config remote.origin.annex-ignore true
+          git annex init --quiet "github-actions-pages"     # autoenables public-s3
+          git remote | grep -qx public-s3 || git annex enableremote public-s3
+          git annex get -J8 --from public-s3 $ANNEXED
+
+      - name: Fall back to the public URL for anything still missing
+        run: |
+          set -euo pipefail
+          cfg=$(git show origin/git-annex:remote.log \
+                | grep -E '(^| )name=public-s3( |$)' | tail -n 1 | tr ' ' '\n')
+          publicurl=$(sed -n 's/^publicurl=//p' <<<"$cfg")
+          fileprefix=$(sed -n 's/^fileprefix=//p' <<<"$cfg")
+          n=0
+          while IFS= read -r -d '' link; do
+            target="$(dirname "$link")/$(readlink "$link")"
+            key="$(basename "$target")"               # MD5E-s<bytes>--<md5>.<ext>
+            mkdir -p "$(dirname "$target")"; chmod u+w "$(dirname "$target")"
+            # curl, not Python: Cloudflare in front of the bucket blocks the
+            # Python-urllib user agent.
+            curl -fsSL --retry 5 --retry-all-errors -o "$target" \
+              "${publicurl}/${fileprefix}${key}"
+            md5="${key#*--}"; md5="${md5%%.*}"
+            echo "${md5}  ${target}" | md5sum --check --quiet -
+            n=$((n + 1))
+          done < <(find $ANNEXED -xtype l -print0)
+          echo "Fetched $n object(s) from ${publicurl}"
+
+      - name: Stage the site with dereferenced copies
+        run: |
+          set -euo pipefail
+          if find $ANNEXED -xtype l | grep -q .; then
+            echo "::error::annexed content still missing:"; find $ANNEXED -xtype l; exit 1
+          fi
+          mkdir -p "$SITE/lib"
+          cp index.html styles.css "$SITE/"
+          cp lib/remark-latest.min.js "$SITE/lib/"
+          rsync -a  --exclude='.git' lib/remark/ "$SITE/lib/remark/"
+          rsync -aL assets/ "$SITE/assets/"
+          rsync -aL practical-2-quality-control/ "$SITE/practical-2-quality-control/"
+          rsync -aL --include='*.png' --include='*.svg' --include='*.webm' --exclude='*' \
+                fmri-visualization/ "$SITE/fmri-visualization/"
+          # The fit & transform slide needs one 7.8 MB file of a 262 MB
+          # submodule: fetch just that file, at the pinned commit.
+          sha=$(git rev-parse HEAD:examples/nipreps-presentations)
+          f=assets/fmriprep-fit-transform-inkscape.svg
+          mkdir -p "$SITE/examples/nipreps-presentations/assets"
+          curl -fsSL --retry 5 -o "$SITE/examples/nipreps-presentations/$f" \
+               "https://raw.githubusercontent.com/nipreps/presentations/${sha}/${f}"
+          chmod -R u+w,a+rX "$SITE"
+
+      - name: Check that every local reference resolves, and the size
+        run: |
+          set -euo pipefail
+          missing=$(grep -ohE '(["(=]|^)(assets|fmri-visualization|lib|examples|practical-2-quality-control)/[^"#) ]+' \
+                      "$SITE/index.html" "$SITE/styles.css" | sed -E 's/^["(=]//' | sort -u \
+                    | while read -r p; do [ -e "$SITE/$p" ] || echo "$p"; done)
+          [ -z "$missing" ] || { printf '::error::missing: %s\n' $missing; exit 1; }
+          bytes=$(du -sb "$SITE" | cut -f1); echo "Site: $((bytes / 1048576)) MiB"
+          [ "$bytes" -lt 1000000000 ] || { echo "::error::over the 1 GB Pages limit"; exit 1; }
+
+      - uses: actions/configure-pages@v5
+        if: github.event_name != 'pull_request'
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: ${{ env.SITE }}
+
+  deploy:
+    if: github.event_name != 'pull_request'
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
